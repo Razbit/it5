@@ -19,11 +19,14 @@ int main()
 	Stack<char> stack;
 	char stackContents[512];
 	
+	for (int i = 0; i < 512; i++)
+		stackContents[i] = '\0';
+	
 	clearWhitespace(szStr);
 
 	int j = 0;
 
-	printf("Input\t|%-16.16s|Output\n", "Stack");
+	printf("%-8.8s|%-16.16s|Output\n", "Input", "Stack");
 	
 	for (int i = 0; i < strlen(szStr); i++)
 	{
@@ -35,7 +38,7 @@ int main()
 			szRet[j] = szStr[i];
 			
 			getStackContents(stackContents, &stack);
-			printf("%c\t\t|%-16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
+			printf("%-8.8c|%-16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
 
 			continue;
 		}
@@ -54,7 +57,7 @@ int main()
 				szRet[j] = temp;
 				
 				getStackContents(stackContents, &stack);
-				printf("%c\t\t|%-16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
+				printf("%-8.8c|%-16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
 			}
 			
 			continue;
@@ -66,7 +69,7 @@ int main()
 			szRet[j++] = ' ';
 		
 		getStackContents(stackContents, &stack);
-		printf("%c\t\t|%-16.16s|\n", szStr[i], stackContents);
+		printf("%-8.8c|%-16.16s|\n", szStr[i], stackContents);
 
 	}
 
@@ -80,7 +83,7 @@ int main()
 		szRet[j] = stack.pop();
 		
 		getStackContents(stackContents, &stack);
-		printf("\t\t|%-16.16s|%c\n", stackContents, szRet[j++]);
+		printf("%-8.8c|%-16.16s|%c\n", ' ', stackContents, szRet[j++]);
 	}
 
 	szRet[j] = '\0'; //null termination
