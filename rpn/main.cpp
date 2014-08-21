@@ -9,10 +9,11 @@ void getStackContents(char* str, Stack<char>* pStack);
 
 int main()
 {
-	printf("Please type a math expression in infix notation: ");
+	//printf("Please type a math expression in infix notation: ");
 
-	char szStr[512];
-	fgets(szStr, sizeof(szStr), stdin);
+	//char szStr[512];
+	//fgets(szStr, sizeof(szStr), stdin);
+	char szStr[] = "5*((9+8)*4*6+7)";
 	
 	char* szRet = new char[strlen(szStr)+1];
 
@@ -38,7 +39,7 @@ int main()
 			szRet[j] = szStr[i];
 			
 			getStackContents(stackContents, &stack);
-			printf("%-8.8c|%-16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
+			printf("%-8.8c|%16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
 
 			continue;
 		}
@@ -57,7 +58,7 @@ int main()
 				szRet[j] = temp;
 				
 				getStackContents(stackContents, &stack);
-				printf("%-8.8c|%-16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
+				printf("%-8.8c|%16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
 			}
 			
 			continue;
@@ -69,7 +70,7 @@ int main()
 			szRet[j++] = ' ';
 		
 		getStackContents(stackContents, &stack);
-		printf("%-8.8c|%-16.16s|\n", szStr[i], stackContents);
+		printf("%-8.8c|%16.16s|\n", szStr[i], stackContents);
 
 	}
 
@@ -83,7 +84,7 @@ int main()
 		szRet[j] = stack.pop();
 		
 		getStackContents(stackContents, &stack);
-		printf("%-8.8c|%-16.16s|%c\n", ' ', stackContents, szRet[j++]);
+		printf("%-8.8c|%16.16s|%c\n", ' ', stackContents, szRet[j++]);
 	}
 
 	szRet[j] = '\0'; //null termination
