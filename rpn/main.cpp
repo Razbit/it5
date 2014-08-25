@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
+int getPrecedence(char ch);
 void clearWhitespace(char* str);
 void getStackContents(char* str, Stack<char>* pStack);
 
@@ -11,9 +12,10 @@ int main()
 {
 	//printf("Please type a math expression in infix notation: ");
 
-	//char szStr[512];
-	//fgets(szStr, sizeof(szStr), stdin);
-	char szStr[] = "5*((9+8)*4*6+7)";
+	//tested with 5*((9+8)*4*6+7)
+	
+	char szStr[512];
+	fgets(szStr, sizeof(szStr), stdin);
 	
 	char* szRet = new char[strlen(szStr)+1];
 
@@ -55,6 +57,7 @@ int main()
 				temp = stack.pop();
 				if (temp == '(')
 					break;
+				szRet[j++] = ' '; //a space to tidy up.. :)
 				szRet[j] = temp;
 				
 				getStackContents(stackContents, &stack);
@@ -63,7 +66,35 @@ int main()
 			
 			continue;
 		}
+
+		if (szStr[i] == '(')
+		{
+			stack.push('(');
+			continue;
+		}
 		
+		//alright, its an operator..
+		int tokPrecedence = getPrecedence(szStr[i]);
+
+		while (!stack.empty())
+		{
+			char temp = stack.pop();
+			int tempPrecedence = getPrecedence(temp);
+			
+			if (tokPrecedence <= tempPrecedence)
+			{
+				szRet[j++] = ' '; //a space to tidy up.. :)
+				szRet[j] = temp;
+				getStackContents(stackContents, &stack);
+				printf("%-8.8c|%16.16s|%c\n", szStr[i], stackContents, szRet[j++]);
+			}
+			else
+			{
+				stack.push(temp);
+				break;
+			}
+		}
+
 		stack.push(szStr[i]);
 		
 		if (szStr[i] != '(') //add a space between operands..
@@ -80,7 +111,8 @@ int main()
 	{
 		if (i++ % 5 == 0)
 			printf("\n"); //cleaner output..
-		
+
+		szRet[j++] = ' '; //a space to tidy up.. :)
 		szRet[j] = stack.pop();
 		
 		getStackContents(stackContents, &stack);
@@ -94,6 +126,20 @@ int main()
 	return 0;
 }
 
+int getPrecedence(char ch)
+{
+	if (ch == '+' || ch == '-')
+		return 1;
+	
+	else if (ch == '*' || ch == '/')
+		return 2;
+	
+	else
+	{
+		//printf("Error: Unknown operator: %c\n",ch);
+		return -1;
+	}
+}
 void clearWhitespace(char* str)
 {
 	//removes all whitespace
