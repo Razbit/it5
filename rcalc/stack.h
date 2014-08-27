@@ -17,7 +17,11 @@ public:
 			m_nSize = 0;
 		}
 	
-    virtual ~Stack(){};
+    virtual ~Stack()
+		{
+			while (!empty())
+				pop();
+		};
 
 	T pop() //remove & return the topmost element
 		{

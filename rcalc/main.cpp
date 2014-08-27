@@ -119,6 +119,11 @@ void do_div(Stack<double>* pStack)
 void print(double num) //removes trailing zeros and prints
 {
 	char buf[32];
+	buf[0] = '\0';
+
+	for (int i = 0; i < 32; i++)
+		buf[i] = '\0';
+	
 	snprintf(buf, sizeof(buf), "%g", num);
 
 	char* ptr = &buf[0];
