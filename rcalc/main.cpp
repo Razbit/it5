@@ -40,6 +40,9 @@ int main()
 		{
 			switch (instr[0])
 			{
+			case '\n':
+				print(pdStack->peek());
+				break;
 			case '+':
 				do_plus(pdStack);
 				break;
