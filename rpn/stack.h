@@ -17,8 +17,17 @@ public:
 			m_nSize = 0;
 		}
 	
-    virtual ~Stack(){};
+    virtual ~Stack()
+		{
+			while (!empty())
+				pop();
+		}
 
+	T peek()
+		{
+			return *(pTop->pElement);
+		}
+	
 	T pop() //remove & return the topmost element
 		{
 			T ret = *(pTop->pElement);
