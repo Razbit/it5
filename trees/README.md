@@ -1,0 +1,5 @@
+Prints
+Pre-order:  ABDEHICFGJKLNOM
+In-order:   DBHEIAFCJGNLOKM
+Post-order: DHIEBFJNOLMKGCA
+
