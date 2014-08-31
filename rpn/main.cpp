@@ -10,10 +10,9 @@ void getStackContents(char* str, Stack<char>* pStack);
 
 int main()
 {
-	//printf("Please type a math expression in infix notation: ");
+	printf("Please type a math expression in infix notation: ");
 
-	//tested with 5*((9+8)*4*6+7)
-	
+	//tested with 5*((9+8)*4*6+7)	
 	char szStr[512];
 	fgets(szStr, sizeof(szStr), stdin);
 	

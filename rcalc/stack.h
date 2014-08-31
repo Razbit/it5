@@ -23,6 +23,11 @@ public:
 				pop();
 		};
 
+	T peek()
+		{
+			return *(pTop->pElement);
+		}
+
 	T pop() //remove & return the topmost element
 		{
 			T ret = *(pTop->pElement);
