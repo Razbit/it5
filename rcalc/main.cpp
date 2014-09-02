@@ -91,8 +91,9 @@ void do_minus(Stack<double>* pStack)
 		printf("Stack error\n");
 		return;
 	}
-	
-    double temp = pStack->pop() - pStack->pop();
+
+	double subtrahend = pStack->pop();
+    double temp = pStack->pop() - subtrahend;
 	print(temp);
 	pStack->push(temp);
 }
@@ -132,7 +133,7 @@ void print(double num) //removes trailing zeros and prints
 	for (int i = 0; i < 32; i++) //for Valgrind's happiness :)
 		buf[i] = '\0';
 	
-	snprintf(buf, sizeof(buf), "%16.16g", num);
+	snprintf(buf, sizeof(buf), "%.16g", num);
 
 	char* ptr = &buf[0];
 	ptr += 31;
