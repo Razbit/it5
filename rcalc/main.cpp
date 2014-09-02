@@ -22,23 +22,29 @@ int main()
 
 	printf("Type q to quit\n");
 	printf("Input a mathematical expression in RPN, each operand and operation on its own line.\n");
+	int i = 0;
 	
 	while (1)
 	{
 		//get input
 		fgets(instr, sizeof(instr), stdin);
 
-		if (instr[0] == 'q')
+		i=0;
+		
+		while (isspace(instr[i])) //leading whitespace
+			i++;
+		
+		if (instr[i] == 'q')
 			break;
 		
-		if (isdigit(instr[0])) //its a number of some sort (presumably)
+		if (isdigit(instr[i]) || isdigit(instr[i+1])) //its a number of some sort (presumably)
 		{
 			sscanf(instr, "%lf", &temp);
 			pdStack->push(temp);
 		}
 		else
 		{
-			switch (instr[0])
+			switch (instr[i])
 			{
 			case '\n':
 				print(pdStack->peek());
@@ -126,7 +132,7 @@ void print(double num) //removes trailing zeros and prints
 	for (int i = 0; i < 32; i++) //for Valgrind's happiness :)
 		buf[i] = '\0';
 	
-	snprintf(buf, sizeof(buf), "%g", num);
+	snprintf(buf, sizeof(buf), "%16.16g", num);
 
 	char* ptr = &buf[0];
 	ptr += 31;
