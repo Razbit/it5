@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <float.h>
+#include <string.h>
 
 void do_plus(Stack<double>*);
 void do_minus(Stack<double>*);
@@ -33,6 +34,15 @@ int main()
 		
 		while (isspace(instr[i])) //leading whitespace
 			i++;
+		
+		if (strstr(instr, "clear"))
+		{
+			//create a new stack (effectively clears the stack)
+			delete pdStack;
+			pdStack = new Stack<double>;
+			printf("\n== STACK CLEARED ==\n\n");
+			continue;
+		}
 		
 		if (instr[i] == 'q')
 			break;
