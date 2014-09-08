@@ -4,19 +4,15 @@
  */
 
 #include "tree.h"
+#include <stdexcept>
+#include <iostream>
 
-template<typename key_t, val_t>
-BinaryTree<key_t, val_t>::BinaryTree()
-{
-	root = NULL;
-}
-
-template<typename key_t, val_t>
+template<typename key_t, typename val_t>
 BinaryTree<key_t, val_t>::~BinaryTree()
 {
 	//Destructor removes the tree completely from memory.
-	bTreeNode<key_t, val_t>* pCur = root;
-	bTreeNode<key_t, val_t>* pParent = root->parent;
+	bTreeNode* pCur = root;
+	bTreeNode* pParent = root->parent;
 	
 	while (root->left || root->right)
 	{
@@ -55,10 +51,10 @@ BinaryTree<key_t, val_t>::~BinaryTree()
 	delete root;
 }
 
-template<typename key_t, val_t>
+template<class key_t, class val_t>
 val_t BinaryTree<key_t, val_t>::find(key_t key)
 {
-	bTreeNode<key_t, val_t>* pCur = root;
+	bTreeNode* pCur = root;
 
 	while (pCur)
 	{
@@ -71,17 +67,17 @@ val_t BinaryTree<key_t, val_t>::find(key_t key)
 	}
 	
 	if(!pCur) //not found, throw exception
-		throw NotFoundFromTree;
+		throw std::runtime_error("Not found");
 	
 	return pCur->data;
 }
 
-template<typename key_t, val_t>
-bTreeNode<key_t, val_t>* BinaryTree<key_t, val_t>::add(key_t key, val_t val)
+template<typename key_t, typename val_t>
+typename BinaryTree<key_t, val_t>::bTreeNode* BinaryTree<key_t, val_t>::add(key_t key, val_t val)
 {
 	if (!root) //if the tree is empty
 	{
-		root = new bTreeNode<key_t, val_t>;
+		root = new bTreeNode;
 		root->left = NULL;
 		root->right = NULL;
 		root->parent = NULL;
@@ -90,7 +86,7 @@ bTreeNode<key_t, val_t>* BinaryTree<key_t, val_t>::add(key_t key, val_t val)
 		return root;
 	}
 	
-	bTreeNode<key_t, val_t>* pCur = root;
+	bTreeNode* pCur = root;
 	
 	while (pCur)
 	{
@@ -107,17 +103,17 @@ bTreeNode<key_t, val_t>* BinaryTree<key_t, val_t>::add(key_t key, val_t val)
 				break; //pCur is the suitable parent for the new node
 	}
 
-	bTreeNode<key_t, val_t>* node;
+	bTreeNode* node;
 	
 	// pCur now points to the parent of the coming child
 	if (pCur->key < key) //add to left
 	{
-		pCur->left = new bTreeNode<key_t, val_t>;
+		pCur->left = new bTreeNode;
 		node = pCur->left;
 	}
 	else //add to right
 	{
-		pCur->right = new bTreeNode<key_t, val_t>;
+		pCur->right = new bTreeNode;
 		node = pCur->right;
 	}
 	node->parent = pCur;
@@ -128,20 +124,20 @@ bTreeNode<key_t, val_t>* BinaryTree<key_t, val_t>::add(key_t key, val_t val)
 	return node;
 }
 
-template<typename key_t, val_t>
+template<class key_t, class val_t>
 bool BinaryTree<key_t, val_t>::remove(key_t key)
 {
 	return remove(key, root);
 }
 
-template<typename key_t, val_t>
-bool BinaryTree<key_t, val_t>::remove(key_t key, bTreeNode<key_t, val_t>* ptr)
+template<class key_t, class val_t>
+bool BinaryTree<key_t, val_t>::remove(key_t key, bTreeNode* ptr)
 {
 
 	if (!root) //if the tree is empty, we cannot remove anything
 		return false;
 	
-	bTreeNode<key_t, val_t>* pCur = ptr;
+	bTreeNode* pCur = ptr;
 
 	while (pCur)
 	{
@@ -189,4 +185,14 @@ bool BinaryTree<key_t, val_t>::remove(key_t key, bTreeNode<key_t, val_t>* ptr)
 	
 		return remove(key, pCur->left);
 	}
+}
+
+template<class key_t, class val_t>
+void BinaryTree<key_t, val_t>::do_print(BinaryTree<key_t, val_t>::bTreeNode* cur)
+{
+	if (cur->left)
+		print(cur->left);
+	if (cur->right)
+		print(cur->right);
+	std::cout << "[ "<< cur->key << " , " << cur->data << " ], ";
 }

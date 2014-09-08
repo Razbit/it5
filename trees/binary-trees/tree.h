@@ -3,33 +3,56 @@
  * Eetu Pesonen 2014
  */
 
-template<typename key_t, val_t> struct bTreeNode
-{
-	key_t key;
-	val_t data; //the data stored in this node
-	bTreeNode<T>* left; //left child
-	bTreeNode<T>* right; //right child
-	bTreeNode<T>* parent;
-};
+#ifndef _H_TREE
+#define _H_TREE
 
-template<class key_t, val_t> class BinaryTree
+#include <iostream>
+#include <stdexcept>
+
+template<class key_t, class val_t>
+class BinaryTree
 {
 public:
-    BinaryTree();
+
+	struct bTreeNode
+	{
+		key_t key;
+		val_t  data; //the data stored in this node
+		bTreeNode* left; //left child
+		bTreeNode* right; //right child
+		bTreeNode* parent;
+	};
+
+    BinaryTree()
+		{
+			root = NULL;
+		}
+	
     virtual ~BinaryTree();
 
 	/* Returns the value stored to the given key
-	 * If not found, throws NotFoundFromTree */
+	 * If not found, throws am exception */
 	val_t find(key_t key);
 	
 	/* adds a new node to the tree, returns pointer to the new node. */
-	bTreeNode<key_t, val_t>* add(key_t key, val_t val);
+	bTreeNode* add(key_t key, val_t val);
 	
 	/* removes the node associated with the given key, returns true on success */
 	bool remove(key_t key);
+
+	void print()
+		{
+			do_print(root);
+		}
 	
 private:
+
+	bTreeNode* root;
+	
 	/* this is the *actual* remover method.. The ptr for recursion */
-	bool remove(key_t key, bTreeNode<key_t, val_t>* ptr)
-	bTreeNode<key_t, val_t>* root;	
+	bool remove(key_t key, bTreeNode* ptr);
+
+	void do_print(bTreeNode* cur);
 };
+
+#endif //_H_TREE
