@@ -22,29 +22,17 @@ std::string names[] = { "Parker", "Camden", "Carlos", "Preston",
 				   "Roman", "Caleb"
 };
 
+template<typename key_t, typename val_t>
 struct node_t
 {
-    int key;
-	std::string val;
+    	key_t key;
+	val_t val;
 };
 
-void init_array(node_t array[]);
-void print(node_t array[]);
-void sel_sort_str(node_t array[]);
+void init_array(node_t<int, std::string array[]);
+void print(node_t<int, std::string array[]);
 
-int main()
-{
-	node_t array[20];
-
-	init_array(array);
-	print(array);
-	std::cout << std::endl;
-	sel_sort_str(array);
-	print(array);
-
-	return 0;
-}
-
+template<typename key_t, typename val_t>
 void sel_sort_str(node_t array[])
 {
 	int smallest_key_index;
@@ -71,7 +59,20 @@ void sel_sort_str(node_t array[])
 	}
 }
 
-void init_array(node_t array[])
+int main()
+{
+	node_t<int, std::string> array[20];
+
+	init_array(array);
+	print(array);
+	std::cout << std::endl;
+	sel_sort_str(array);
+	print(array);
+
+	return 0;
+}
+
+void init_array(node_t<int, std::string> array[])
 {
 	// initialize to random content
 	for (int i = 0; i < 20; i++)
@@ -81,7 +82,7 @@ void init_array(node_t array[])
 	}
 }
 
-void print(node_t array[])
+void print(node_t<int, std::string> array[])
 {
 	for (int i = 0; i < 20; i++)
 	{
